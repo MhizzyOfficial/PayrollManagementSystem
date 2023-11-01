@@ -32,13 +32,9 @@ namespace PayRollManagementSystem.Models
 
         public double OvertimeHours { get; set; }
 
-        // Private fields for regular and overtime rates
-
         private double regularRate;
 
         private double overtimeRate;
-
-        // Public read-only properties for regular and overtime rates
 
         public double RegularRate
 
@@ -56,15 +52,15 @@ namespace PayRollManagementSystem.Models
 
         }
 
-        public double GrossPay { get; private set; }
+        public double GrossPay { get;  set; }
 
-        public double NetPay { get; private set; }
+        public double NetPay { get;  set; }
 
-        public double MedicareDeduction { get; private set; }
+        public double MedicareDeduction { get;  set; }
 
-        public double RentDeduction { get; private set; }
+        public double RentDeduction { get;  set; }
 
-        public double FoodDeduction { get; private set; }
+        public double FoodDeduction { get;  set; }
 
         public Employee(double regularRate, double overtimeRate)
 
@@ -81,37 +77,30 @@ namespace PayRollManagementSystem.Models
         {
 
             if (IsActive)
+                NewMethod();
+        }
+
+        private void NewMethod()
+        {
+            GrossPay = (RegularHours * RegularRate) + (OvertimeHours * OvertimeRate);
+
+            if (OvertimeHours == 0)
 
             {
 
-                // Calculate Gross Pay
-
-                GrossPay = (RegularHours * RegularRate) + (OvertimeHours * OvertimeRate);
-
-                if (OvertimeHours == 0)
-
-                {
-
-                    GrossPay = RegularHours * RegularRate;
-
-                }
-
-                // Calculate Deductions
-
-                MedicareDeduction = 0.02 * GrossPay;
-
-                RentDeduction = 0.05 * GrossPay;
-
-                FoodDeduction = 0.03 * GrossPay;
-
-                // Calculate Net Pay
-
-                NetPay = GrossPay - (MedicareDeduction + RentDeduction + FoodDeduction);
+                GrossPay = RegularHours * RegularRate;
 
             }
 
-        }
+            MedicareDeduction = 0.02 * GrossPay;
 
+            RentDeduction = 0.05 * GrossPay;
+
+            FoodDeduction = 0.03 * GrossPay;
+
+            NetPay = GrossPay - (MedicareDeduction + RentDeduction + FoodDeduction);
+
+        }
     }
 
 }
